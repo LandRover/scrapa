@@ -1,6 +1,7 @@
-const scrape = async ({ url, type }) => {
+const scrape = async ({ url, type = 'get' }) => {
     try {
-        body = await _loadScraper(type).get(url);
+
+        let body = await _loadScraper(type).get(url);
         return body;
 
     } catch (err) {
@@ -18,7 +19,7 @@ const _loadScraper = function (type) {
             scraper = require('../http/fetch');
             break;
 
-        case 'browser':
+        case 'headless':
             scraper = require('../http/puppeteer');
             break;
 
