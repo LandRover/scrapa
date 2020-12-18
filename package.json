@@ -2,7 +2,7 @@
   "name": "scrapa",
   "version": "1.0.0",
   "description": "Scrape Parse Transform Repeat",
-  "main": "./src/transform",
+  "main": "./src/scrapa",
   "engines": {
     "node": ">= 12.0.0"
   },

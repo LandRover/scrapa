@@ -138,7 +138,7 @@ scrape({ url: 'https://news.yahoo.com' })
         type: 'json',
         fields: { href: 'context.dispatcher.stores.PageStore.pageData.links.{Iterator}.href'},
         options: {
-            regExp: new RegExp('main = (.*?);\n.*\}\\(this\\)\\);', 'gm'),
+            regExp: new RegExp('root\.App\.main = (.*?);\n.*\}\\(this\\)\\);', 'gm'), 
         },
 })).then(parsed => console.log(parsed));
 ```
