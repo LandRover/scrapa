@@ -116,12 +116,7 @@ scrape({
   fields: [
     { href: '//s.yimg.com' },
     { href: '//mbp.yimg.com' },
-    { href: '//geo.query.yahoo.com' },
-    { href: '//consent.cmp.oath.com' },
-    { href: '//csc.beap.bc.yahoo.com' },
     ...
-    { href: '//shim.btrll.com' },
-    { href: 'https://s.yimg.com/cv/apiv2/default/icons/favicon_y19_32x32_custom.svg' },
     { href: 'https://s.yimg.com/cv/apiv2/default/fp/20180826/icons/favicon_y19_32x32.ico' },
     { href: 'https://news.yahoo.com/' }
   ]
