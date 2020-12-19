@@ -199,5 +199,6 @@ parse({body, type: 'json', fields: {
 - Add referrer, parse automatically from the request URL
 - Randomize useragent.
 - Inject logger
+- Cover scrape with tests
+- Add E2E
 - Parse tranfsormation, forexample parse date str to `Date` object.
-
