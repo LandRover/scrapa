@@ -62,22 +62,10 @@ const _JSON = (body, fields, options) => {
 };
 
 
-const _JSONStringToObject = (string) => {
-    return JSON.parse(string);
-};
-
-
 module.exports = async function ({ body, fields, options }) {
-    if (undefined !== options.regExp) {
-        let res = options.regExp.exec(body);
-
-        if (undefined !== res[1]) {
-            body = res[1];
-        }
-    }
-    
+    // try parsing
     if ('object' !== typeof (body)) {
-        body = _JSONStringToObject(body);
+        body = JSON.parse(body);
     }
 
     return _JSON(body, fields, options);

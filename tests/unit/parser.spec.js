@@ -1,8 +1,8 @@
 let fs = require('fs');
 const { parse } = require('../../src/lib/parser/parse');
-//const mocks = require('./fixtures/http_mocks');
 
 const readFixtureFile = filePath => fs.readFileSync(`./tests/unit/fixtures/${filePath}`, 'utf8');
+
 
 // 'When no price is specified, then the product status is pending approval'
 describe('Parser', function() {
@@ -167,28 +167,6 @@ describe('Parser', function() {
 
             // Assert
             expect(sut.fields[0].name_is).toBe('Larry Page');
-        });
-
-
-        it('When parsing HTML, extract the JSON part using RegExp and parse internal articles', async function () {
-            // Arrange
-            let type = 'json',
-                fields = {
-                    author_is: 'news.articles.0.title',
-                    date_is: 'news.articles.0.date',
-                }, 
-                options = {
-                    regExp: new RegExp('AppData = \'(.*?)\';'),
-                };
-            
-            let body = readFixtureFile('json_single_news_in_html.html');
-
-            // Act
-            let sut = await parse({ type, body, fields, options });
-
-            // Assert
-            expect(sut.fields[0].author_is).toMatch('this is title 1');
-            expect(sut.fields[0].date_is).toMatch('01/01/2001');
         });
 
 
