@@ -52,6 +52,7 @@ const _loadPage = async (browser, url, pageOptions) => {
             let body = await page.content();
 
             await page.close();
+            await browser.close();
 
             resolve(body);
         } catch (error) {
