@@ -31,6 +31,7 @@ const config = {
 const get = async function (url) {
     let browser = await _getBrowser(config.puppeteerLaunchOptions);
     let body = await _loadPage(browser, url, config.pageOptions);
+    await browser.close();
 
     return body;
 };
@@ -52,7 +53,6 @@ const _loadPage = async (browser, url, pageOptions) => {
             let body = await page.content();
 
             await page.close();
-            await browser.close();
 
             resolve(body);
         } catch (error) {
