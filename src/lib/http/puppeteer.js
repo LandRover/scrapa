@@ -31,6 +31,7 @@ const config = {
 const get = async function (url) {
     let browser = await _getBrowser(config.puppeteerLaunchOptions);
     let body = await _loadPage(browser, url, config.pageOptions);
+    await browser.close();
 
     return body;
 };
