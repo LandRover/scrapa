@@ -47,8 +47,19 @@ const _loadPage = async (browser, url, pageOptions) => {
             const page = await browser.newPage();
 
             await page.setUserAgent(config.userAgent);
-            await page.goto(url, pageOptions);
+            await page.setRequestInterception(true);
 
+            // filter images, fonts and css
+            page.on('request', (interceptedRequest) => {
+                if (/(stylesheet|image|font)/.test(interceptedRequest.resourceType())) {
+                    interceptedRequest.abort();
+                }
+                else {
+                    interceptedRequest.continue();
+                }
+            });
+
+            await page.goto(url, pageOptions);
             let body = await page.content();
 
             await page.close();
