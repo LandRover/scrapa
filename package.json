@@ -1,6 +1,6 @@
 {
   "name": "scrapa",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Scrape Parse Transform Repeat",
   "main": "./src/scrapa",
   "engines": {
@@ -26,16 +26,19 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.11",
     "fast-xml-parser": "^4.0.8",
-    "node-fetch": "^3.2.6",
+    "node-fetch": "^2.6.7",
     "puppeteer": "^14.3.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.18.2",
+    "babel-jest": "^28.1.1",
     "eslint": "^8.17.0",
     "jest": "^28.1.1",
-    "nock": "^13.2.6"
+    "nock": "^13.2.6",
+    "ts-jest": "^28.0.4"
   },
   "jest": {
-    "testPathIgnorePatterns": [
+      "testPathIgnorePatterns": [
       "<rootDir>/src/",
       "<rootDir>/tests/fixtures/",
       "/node_modules/"
