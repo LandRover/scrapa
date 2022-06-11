@@ -1,7 +1,7 @@
 let fs = require('fs');
 const { parse } = require('../../src/lib/parser/parse');
 
-const readFixtureFile = filePath => fs.readFileSync(`./tests/unit/fixtures/${filePath}`, 'utf8');
+const readFixtureFile = filePath => fs.readFileSync(`./tests/fixtures/${filePath}`, 'utf8');
 
 
 // 'When no price is specified, then the product status is pending approval'
@@ -107,7 +107,7 @@ describe('Parser', function() {
                     price: 'catalog.book.0.price',
                 };
       
-            let body = readFixtureFile('xml_books_list.xml');
+            let body = readFixtureFile('books_list.xml');
 
             // Act
             let sut = await parse({ type, body, fields });
@@ -126,7 +126,7 @@ describe('Parser', function() {
                     price: 'catalog.book.{Iterator}.price',
                 };
 
-            let body = readFixtureFile('xml_books_list.xml');
+            let body = readFixtureFile('books_list.xml');
 
             // Act
             let sut = await parse({ type, body, fields });

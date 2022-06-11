@@ -5,10 +5,10 @@ const url = 'https://agilemanifesto.org';
 describe('Fetch', function() {
 
 
-    describe('fetching HTML', function () {
+    describe('fetching remote page', function () {
 
 
-        it('When making an HTTP call, should retrieve a valid HTML page', async function () {
+        it('When making an HTTP call to AgileManifesto, should retrieve a valid Manifesto page', async function () {
             let body = 'Manifesto for Agile Software Development';
 
             // Act
