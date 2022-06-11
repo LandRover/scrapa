@@ -4,7 +4,7 @@ const { parse } = require('../../src/lib/parser/parse');
 const readFixtureFile = filePath => fs.readFileSync(`./tests/fixtures/${filePath}`, 'utf8');
 
 
-// 'When no price is specified, then the product status is pending approval'
+//
 describe('Parser', function() {
 
 

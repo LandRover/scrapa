@@ -1,4 +1,4 @@
-const {  scrape, parse } = require('../../src/scrapa');
+const { scrape, parse } = require('../../src/scrapa');
 
 const dataUrls = {
     xml: 'https://raw.githubusercontent.com/LandRover/scrapa/master/tests/fixtures/books_list.xml',
@@ -6,7 +6,7 @@ const dataUrls = {
     html: 'https://raw.githubusercontent.com/LandRover/scrapa/master/tests/fixtures/html_simple_list.html',
 };
 
-// 'When no price is specified, then the product status is pending approval'
+//
 describe('Sanity', function() {
 
     describe('Handle XML', function () {
