@@ -1,4 +1,4 @@
-const XMLParser = require('fast-xml-parser');
+const { XMLParser } = require('fast-xml-parser');
 const json = require('./json');
 
 module.exports = async function ({ body, fields, options }) {
@@ -13,7 +13,8 @@ module.exports = async function ({ body, fields, options }) {
     }
 
     try {
-        let convertedToJSON = XMLParser.parse(xmlData);
+        const parser = new XMLParser();
+        let convertedToJSON = parser.parse(xmlData);
         let jsonConvertedObject = json({ body: convertedToJSON, fields, options });
 
         return jsonConvertedObject;

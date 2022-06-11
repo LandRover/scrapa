@@ -1,6 +1,6 @@
 {
   "name": "scrapa",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Scrape Parse Transform Repeat",
   "main": "./src/scrapa",
   "engines": {
@@ -24,15 +24,15 @@
   },
   "homepage": "https://github.com/LandRover/scrapa#readme",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "fast-xml-parser": "^3.17.5",
-    "node-fetch": "^2.6.1",
-    "puppeteer": "^5.5.0"
+    "cheerio": "^1.0.0-rc.11",
+    "fast-xml-parser": "^4.0.8",
+    "node-fetch": "^3.2.6",
+    "puppeteer": "^14.3.0"
   },
   "devDependencies": {
-    "eslint": "^7.15.0",
-    "jest": "^26.6.3",
-    "nock": "^13.0.5"
+    "eslint": "^8.17.0",
+    "jest": "^28.1.1",
+    "nock": "^13.2.6"
   },
   "jest": {
     "testPathIgnorePatterns": [
