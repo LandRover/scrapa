@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "Scrape Parse Transform Repeat",
   "main": "./src/scrapa",
+  "type": "commonjs",
   "engines": {
     "node": ">= 12.0.0"
   },
