@@ -12,7 +12,7 @@ const get = async function (url) {
         'User-Agent': config.userAgent
     };
 
-    let referrer = _getDomainName(url);
+    let referrer = await _getDomainName(url);
 
     const response = await fetch(url, {
         headers,
@@ -25,7 +25,7 @@ const get = async function (url) {
 };
 
 
-const _getDomainName = function (url) {
+const _getDomainName = async function (url) {
     let domain = (new URL(url));
 
     return domain.origin;
