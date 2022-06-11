@@ -14,5 +14,8 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Deps
+        run: npm install
+
       - name: Test
         run: npm test
