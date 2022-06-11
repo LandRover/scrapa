@@ -12,13 +12,24 @@ const get = async function (url) {
         'User-Agent': config.userAgent
     };
 
-    const response = await fetch(url, {headers})
+    let referrer = _getDomainName(url);
+
+    const response = await fetch(url, {
+        headers,
+        referrer
+    })
     .then(res => res.text())
     .catch(err => console.error(err));
 
     return response;
 };
 
+
+const _getDomainName = function (url) {
+    let domain = (new URL(url));
+
+    return domain.origin;
+};
 
 module.exports = {
     get

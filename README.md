@@ -196,9 +196,8 @@ parse({body, type: 'json', fields: {
 ## TODO
 - Debug output
 - Status code responses
-- Add referrer, parse automatically from the request URL
 - Randomize useragent.
 - Inject logger
 - Cover scrape with tests
 - Add E2E
-- Parse tranfsormation, forexample parse date str to `Date` object.
+- Parse tranfsormation, for example parse date str to `Date` object.
