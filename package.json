@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
-    "coverage": "jest --collect-coverage",
+    "coverage": "node --experimental-vm-modules node_modules/.bin/jest --collect-coverage",
     "postinstall": "node tasks/postinstall.js || exit 0",
     "lint": "eslint src/** tests/**"
   },
