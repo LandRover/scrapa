@@ -55,8 +55,8 @@ import { scrape, parse } from 'scrapa';
 let body = await scrape({url: 'https://news.yahoo.com'});
 
 let parsed = await parse({body, fields: {
-      title_now_is: 'head > title'
-    }
+    title_now_is: 'head > title'
+  }
 });
 
 console.info(parsed);
@@ -79,8 +79,8 @@ import { scrape, parse } from 'scrapa';
 let body = await scrape({url: 'https://news.yahoo.com'});
 
 let parsed = await parse({body, fields: {
-        article_title: '.js-stream-content ul li div'
-    }
+    article_title: '.js-stream-content ul li div'
+  }
 });
 
 console.info(parsed);
@@ -103,17 +103,17 @@ Extracting links from Yahoo, finding the JSON part (root.App.main), and using it
 import { scrape, parse } from 'scrapa';
 
 let body = await scrape({
-    url: 'https://news.yahoo.com',
-    regExp: [new RegExp('root\.App\.main = (.*?);\n.*\}\\(this\\)\\);', 'gm')],
+  url: 'https://news.yahoo.com',
+  regExp: [new RegExp('root\.App\.main = (.*?);\n.*\}\\(this\\)\\);', 'gm')],
 });
 
 let parsed = await parse({ 
-    body,
-    type: 'json',
-    fields: { href: 'context.dispatcher.stores.PageStore.pageData.links.{Iterator}.href'},
-    options: {
-        
-    },
+  body,
+  type: 'json',
+  fields: { href: 'context.dispatcher.stores.PageStore.pageData.links.{Iterator}.href'},
+  options: {
+      
+  },
 });
 
 console.info(parsed);
@@ -159,7 +159,8 @@ Currently it takes all the .innerHTML from the selectors and populate them as ou
 import { parse } from 'scrapa';
 
 let parsed = await parse({body, type: 'html', fields: {
-    page_title: 'head > title'}
+    page_title: 'head > title'
+  }
 });
 
 console.debug(parsed);
@@ -177,8 +178,8 @@ Other than these, properties should behave as a regular JSON array address.
 import { parse } from 'scrapa';
 
 let parsed = await parse({body, type: 'json', fields: {
-    books_title: 'catalog.book.0.title',
-    books_price: 'catalog.book.{Iterator}.title',
+  books_title: 'catalog.book.0.title',
+  books_price: 'catalog.book.{Iterator}.title',
 }});
 
 console.debug(parsed);
