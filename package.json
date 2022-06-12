@@ -3,12 +3,12 @@
   "version": "0.1.6",
   "description": "Scrape Parse Transform Repeat",
   "main": "./src/scrapa",
-  "type": "commonjs",
+  "type": "module",
   "engines": {
     "node": ">= 16.0.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "coverage": "jest --collect-coverage",
     "postinstall": "node tasks/postinstall.js || exit 0",
     "lint": "eslint src/** tests/**"
@@ -27,7 +27,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.11",
     "fast-xml-parser": "^4.0.8",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.2.6",
     "puppeteer": "^14.3.0"
   },
   "devDependencies": {
@@ -39,11 +39,19 @@
     "ts-jest": "^28.0.4"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "<rootDir>/src/",
-      "<rootDir>/tests/fixtures/",
-      "/node_modules/"
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.(js)$": "babel-jest"
+    },
+    "moduleDirectories": [
+      "<rootDir>/src",
+      "node_modules"
     ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/tests/fixtures/"
+    ],
+    "moduleFileExtensions": ["js"],
     "verbose": false
   }
 }

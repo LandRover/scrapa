@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-const puppeteer = require('puppeteer');
+import fetch from 'node-fetch';
 
 
 const config = {
@@ -38,6 +37,6 @@ const _getDomainName = async function (url) {
     return domain.origin;
 };
 
-module.exports = {
+export {
     get
 };

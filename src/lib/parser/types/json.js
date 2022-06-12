@@ -62,7 +62,7 @@ const _JSON = (body, fields, options) => {
 };
 
 
-module.exports = async function ({ body, fields, options }) {
+export default async function ({ body, fields, options }) {
     // try parsing
     if ('object' !== typeof (body)) {
         body = JSON.parse(body);

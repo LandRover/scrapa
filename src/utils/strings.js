@@ -9,6 +9,6 @@ const sanitize = function(str) {
 }
 
 
-module.exports = {
+export default {
     sanitize
 };

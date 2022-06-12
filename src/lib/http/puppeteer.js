@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
 
 
 const config = {
@@ -73,6 +72,6 @@ const _loadPage = async (browser, url, pageOptions) => {
 };
 
 
-module.exports = {
+export {
     get
 };

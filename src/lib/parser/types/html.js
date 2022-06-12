@@ -1,7 +1,7 @@
-const Strings = require('../../../utils/strings');
-const cheerio = require('cheerio');
+import Strings from '../../../utils/strings';
+import * as cheerio from 'cheerio';
 
-module.exports = async function ({ body, fields, options }) {
+export default async function ({ body, fields, options }) {
     let output = {
         total: 0,
         fields: []
