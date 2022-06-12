@@ -19,10 +19,11 @@ You also can use this library to get remote content without the parse phase.
 #### Example for scraping Yahoo via headless browser.
 
 ```js
-const { scrape } = require('scrapa');
+import { scrape } from 'scrapa';
 
-scrape({ url: 'https://news.yahoo.com', type: 'headless' })
-.then(body => console.debug(body))
+let body = await scrape({ url: 'https://news.yahoo.com', type: 'headless' });
+
+console.debug(body);
 ```
 
 ### 2. Parse
@@ -31,7 +32,7 @@ scrape({ url: 'https://news.yahoo.com', type: 'headless' })
 
 ### Anonymity
 
-All requests currently sent with a basic hardcoded user agent `Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1`
+All requests currently sent with a basic hardcoded user agent `Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604.1`
 
 Headless browser sends the same useragent.
 
@@ -49,14 +50,16 @@ npm install --save scrapa
 Extract the title of Yahoo website located in <head><title>Yahoo News<title/></head>
 
 ```js
-const { scrape, parse } = require('scrapa');
+import { scrape, parse } from 'scrapa';
 
-// Promise
-scrape({url: 'https://news.yahoo.com'})
-.then(body => parse({body, fields: {
-    title_now_is: 'head > title'}
-}))
-.then(parsed => console.info(parsed))
+let body = await scrape({url: 'https://news.yahoo.com'});
+
+let parsed = await parse({body, fields: {
+      title_now_is: 'head > title'
+    }
+});
+
+console.info(parsed);
 ```
 
 ```js
@@ -71,14 +74,16 @@ scrape({url: 'https://news.yahoo.com'})
 Extract top 3 items from Yahoo News
 
 ```js
-const { scrape, parse } = require('scrapa');
+import { scrape, parse } from 'scrapa';
 
-// Promise
-scrape({url: 'https://news.yahoo.com'})
-.then(body => parse({body, fields: {
-    article_title: '.js-stream-content ul li h3'}
-}))
-.then(parsed => console.info(parsed))
+let body = await scrape({url: 'https://news.yahoo.com'});
+
+let parsed = await parse({body, fields: {
+        article_title: '.js-stream-content ul li div'
+    }
+});
+
+console.info(parsed);
 ```
 
 ```js
@@ -95,20 +100,23 @@ scrape({url: 'https://news.yahoo.com'})
 
 Extracting links from Yahoo, finding the JSON part (root.App.main), and using it instead of HTML parsing.
 ```js
-const { scrape, parse } = require('scrapa');
+import { scrape, parse } from 'scrapa';
 
-scrape({
+let body = await scrape({
     url: 'https://news.yahoo.com',
     regExp: [new RegExp('root\.App\.main = (.*?);\n.*\}\\(this\\)\\);', 'gm')],
-})
-.then(body => parse({ 
+});
+
+let parsed = await parse({ 
     body,
     type: 'json',
     fields: { href: 'context.dispatcher.stores.PageStore.pageData.links.{Iterator}.href'},
     options: {
         
     },
-})).then(parsed => console.log(parsed));
+});
+
+console.info(parsed);
 ```
 ```js
 {
@@ -117,7 +125,7 @@ scrape({
     { href: '//s.yimg.com' },
     { href: '//mbp.yimg.com' },
     ...
-    { href: 'https://s.yimg.com/cv/apiv2/default/fp/20180826/icons/favicon_y19_32x32.ico' },
+    { href: 'https://s.yimg.com/cv/apiv2/favicon_y19_32x32.ico' },
     { href: 'https://news.yahoo.com/' }
   ]
 }
@@ -148,12 +156,13 @@ Parses finds the `fields` and extracts the data formatted in the output under th
 Currently it takes all the .innerHTML from the selectors and populate them as output.
 
 ```js
-const { parse } = require('scrapa');
+import { parse } from 'scrapa';
 
-parse({body, type: 'html', fields: {
+let parsed = await parse({body, type: 'html', fields: {
     page_title: 'head > title'}
-}))
-.then(parsed => console.debug(parsed))
+});
+
+console.debug(parsed);
 ```
 
 `json` - Fields should be mapped as you would regularly read from JSON with DOT notation (store.books.0.title). 
@@ -165,13 +174,14 @@ Another operator used for objects containing many rows, for getting all objects,
 Other than these, properties should behave as a regular JSON array address.
 
 ```js
-const { parse } = require('scrapa');
+import { parse } from 'scrapa';
 
-parse({body, type: 'json', fields: {
-    books_title: 'store.books.0.title'},
-    books_price: 'store.books.{Iterator}.title'},
-}))
-.then(parsed => console.debug(parsed))
+let parsed = await parse({body, type: 'json', fields: {
+    books_title: 'catalog.book.0.title',
+    books_price: 'catalog.book.{Iterator}.title',
+}});
+
+console.debug(parsed);
 ```
 
 `xml` - Converts XML input to JSON. All syntax should be similar to JSON
