@@ -1,5 +1,5 @@
-import * as fetch from '../http/fetch';
-import * as puppeteer from '../http/puppeteer';
+import * as fetch from '../http/fetch.js';
+import * as puppeteer from '../http/puppeteer.js';
 
 
 const scrape = async ({ url, type = 'get', regExp = [] }) => {

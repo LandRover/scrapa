@@ -1,4 +1,4 @@
-import { get } from '../../src/lib/http/fetch';
+import { get } from '../../src/lib/http/fetch.js';
 const url = 'https://agilemanifesto.org';
 
 // 'When no price is specified, then the product status is pending approval'
