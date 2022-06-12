@@ -211,4 +211,5 @@ console.debug(parsed);
 - Inject logger
 - Cover scrape with tests
 - Add E2E
+- Add websockets support, to reduce the need for headless.
 - Parse tranfsormation, for example parse date str to `Date` object.
