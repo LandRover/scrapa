@@ -1,4 +1,4 @@
-import Strings from '../../../utils/strings';
+import Strings from '../../../utils/strings.js';
 import * as cheerio from 'cheerio';
 
 export default async function ({ body, fields, options }) {

@@ -1,5 +1,5 @@
 import { XMLParser } from 'fast-xml-parser';
-import json from './json';
+import json from './json.js';
 
 export default async function ({ body, fields, options }) {
     let xmlData = body;

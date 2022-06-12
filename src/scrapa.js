@@ -1,5 +1,5 @@
-import { parse } from './lib/parser/parse';
-import { scrape } from './lib/scraper/scrape';
+import { parse } from './lib/parser/parse.js';
+import { scrape } from './lib/scraper/scrape.js';
 
 
 export {

@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { parse } from '../../src/lib/parser/parse';
+import { parse } from '../../src/lib/parser/parse.js';
 
 const readFixtureFile = filePath => fs.readFileSync(`./tests/fixtures/${filePath}`, 'utf8');
 
