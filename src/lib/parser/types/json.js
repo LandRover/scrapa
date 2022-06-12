@@ -8,7 +8,7 @@ const _JSON = (body, fields, options) => {
         let selector = fields[el],
             len = 1; //default
 
-        // Handle dynamic iterator
+        // Handle dynamic iterator, @todo: move somewhere.. not clean, not testable.
         if (0 <= selector.indexOf('{Iterator}')) {
             let [prefixTree] = selector.split('{Iterator}');
 
