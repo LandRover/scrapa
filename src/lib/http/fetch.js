@@ -8,20 +8,27 @@ const config = {
 
 
 const get = async function (url) {
+    let body = '';
+
     let headers = {
         'User-Agent': config.userAgent
     };
 
     let referrer = await _getDomainName(url);
 
-    const response = await fetch(url, {
-        headers,
-        referrer
-    })
-    .then(res => res.text())
-    .catch(err => console.error(err));
+    try {
+        const response = await fetch(url, {
+            headers,
+            referrer,
+        });
 
-    return response;
+        body = await response.text();
+
+    } catch(err) {
+        console.error(err);
+    }
+
+    return body;
 };
 
 

@@ -1,6 +1,6 @@
 {
   "name": "scrapa",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Scrape Parse Transform Repeat",
   "main": "./src/scrapa",
   "type": "commonjs",
