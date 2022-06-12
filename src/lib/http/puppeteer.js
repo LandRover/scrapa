@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 
 const config = {
-    userAgent: 'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1',
+    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604.1',
 
 
     puppeteerLaunchOptions: {
@@ -17,13 +17,13 @@ const config = {
         //dumpio: true,
         headless: true,
         defaultViewport: null,
-        userDataDir: './.tmp/cache/browser'
+        userDataDir: './.tmp/cache/browser',
     },
     
 
     pageOptions: {
         waitUntil: ['load', 'domcontentloaded', 'networkidle2'],
-            timeout: 25000
+        timeout: 25000,
     }
 };
 
