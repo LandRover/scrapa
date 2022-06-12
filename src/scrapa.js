@@ -1,7 +1,8 @@
-const { parse } = require('./lib/parser/parse');
-const { scrape } = require('./lib/scraper/scrape');
+import { parse } from './lib/parser/parse';
+import { scrape } from './lib/scraper/scrape';
 
-module.exports = {
+
+export {
     scrape,
     parse,
 };

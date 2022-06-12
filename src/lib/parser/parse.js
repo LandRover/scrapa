@@ -1,7 +1,7 @@
-const parse = function ({ body, type = 'html', fields = {}, options = {} }) {
+const parse = async function ({ body, type = 'html', fields = {}, options = {} }) {
     try {
 
-        let parse = _loadParser(type);
+        let parse = await _loadParser(type);
         let response = parse({body, fields, options});
 
         return response;
@@ -12,19 +12,21 @@ const parse = function ({ body, type = 'html', fields = {}, options = {} }) {
 };
 
 
-const _loadParser = function(type) {
+const _loadParser = async function(type) {
+    let parser = null;
+
     // this uses a switch for static require analysis
     switch (type) {
         case 'json':
-            parser = require('./types/json')
+            parser = (await import('./types/json')).default;
             break;
 
         case 'xml':
-            parser = require('./types/xml')
+            parser = (await import('./types/xml')).default;
             break;
             
         case 'html':
-            parser = require('./types/html')
+            parser = (await import('./types/html')).default;
             break;
 
         default:
@@ -35,6 +37,6 @@ const _loadParser = function(type) {
 };
 
 
-module.exports = {
+export {
     parse
 };

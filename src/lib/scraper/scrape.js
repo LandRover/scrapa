@@ -1,3 +1,7 @@
+import * as fetch from '../http/fetch';
+import * as puppeteer from '../http/puppeteer';
+
+
 const scrape = async ({ url, type = 'get', regExp = [] }) => {
     try {
 
@@ -29,11 +33,11 @@ const _loadScraper = function (type) {
     switch (type) {
 
         case 'get':
-            scraper = require('../http/fetch');
+            scraper = fetch;
             break;
 
         case 'headless':
-            scraper = require('../http/puppeteer');
+            scraper = puppeteer;
             break;
 
         default:
@@ -44,6 +48,6 @@ const _loadScraper = function (type) {
 };
 
 
-module.exports = {
+export {
     scrape
 };

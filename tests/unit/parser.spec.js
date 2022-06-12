@@ -1,5 +1,5 @@
-let fs = require('fs');
-const { parse } = require('../../src/lib/parser/parse');
+import * as fs from 'fs';
+import { parse } from '../../src/lib/parser/parse';
 
 const readFixtureFile = filePath => fs.readFileSync(`./tests/fixtures/${filePath}`, 'utf8');
 

@@ -1,4 +1,4 @@
-const { scrape, parse } = require('../../src/scrapa');
+import { scrape, parse } from '../../src/scrapa';
 
 const dataUrls = {
     xml: 'https://raw.githubusercontent.com/LandRover/scrapa/master/tests/fixtures/books_list.xml',

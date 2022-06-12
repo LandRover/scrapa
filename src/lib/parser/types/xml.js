@@ -1,7 +1,7 @@
-const { XMLParser } = require('fast-xml-parser');
-const json = require('./json');
+import { XMLParser } from 'fast-xml-parser';
+import json from './json';
 
-module.exports = async function ({ body, fields, options }) {
+export default async function ({ body, fields, options }) {
     let xmlData = body;
 
     if (undefined !== options.regExp) {
@@ -20,6 +20,6 @@ module.exports = async function ({ body, fields, options }) {
         return jsonConvertedObject;
 
     } catch (err) {
-        console.log(err.message)
+        console.log(err.message);
     }
 };
