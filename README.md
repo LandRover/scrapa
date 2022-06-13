@@ -207,7 +207,7 @@ console.debug(parsed);
 ## TODO
 - Debug output
 - Status code responses
-- Inject logger
+- Inject external logger
 - Cover scrape with tests
 - Add E2E
 - Add websockets support, to reduce the need for headless.
