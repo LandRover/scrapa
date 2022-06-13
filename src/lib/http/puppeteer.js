@@ -10,6 +10,10 @@ const config = {
             '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process',
             '--disable-gpu'
         ],
 
@@ -22,14 +26,22 @@ const config = {
 
     pageOptions: {
         waitUntil: ['load', 'domcontentloaded', 'networkidle2'],
-        timeout: 25000,
+        timeout: 40000,
     }
 };
 
 
 const get = async function (url) {
+    let body = null;
+
     let browser = await _getBrowser(config.puppeteerLaunchOptions);
-    let body = await _loadPage(browser, url, config.pageOptions);
+
+    try {
+        body = await _loadPage(browser, url, config.pageOptions);
+    } catch(err) {
+        console.error('Puppeteer browser failed to load page', err);
+    }
+
     await browser.close();
 
     return body;
@@ -42,33 +54,27 @@ const _getBrowser = async (launchOptions) => {
 
 
 const _loadPage = async (browser, url, pageOptions) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const page = await browser.newPage();
+    const page = await browser.newPage();
 
-            await page.setUserAgent(config.userAgent);
-            await page.setRequestInterception(true);
+    await page.setUserAgent(config.userAgent);
+    await page.setRequestInterception(true);
 
-            // filter images, fonts and css
-            page.on('request', (interceptedRequest) => {
-                if (/(stylesheet|image|font)/.test(interceptedRequest.resourceType())) {
-                    interceptedRequest.abort();
-                }
-                else {
-                    interceptedRequest.continue();
-                }
-            });
-
-            await page.goto(url, pageOptions);
-            let body = await page.content();
-
-            await page.close();
-
-            resolve(body);
-        } catch (error) {
-            reject(error);
+    // filter images, fonts and css
+    page.on('request', (interceptedRequest) => {
+        if (/(stylesheet|image|font)/.test(interceptedRequest.resourceType())) {
+            interceptedRequest.abort();
+        }
+        else {
+            interceptedRequest.continue();
         }
     });
+
+    await page.goto(url, pageOptions);
+    let body = await page.content();
+
+    await page.close();
+
+    return body;
 };
 
 
