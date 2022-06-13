@@ -1,5 +1,6 @@
 import * as fetch from '../http/fetch.js';
 import * as puppeteer from '../http/puppeteer.js';
+import * as websocket from '../http/websocket.js';
 
 
 const scrape = async ({ url, type = 'get', regExp = [] }) => {
@@ -38,6 +39,10 @@ const _loadScraper = function (type) {
 
         case 'headless':
             scraper = puppeteer;
+            break;
+
+        case 'websocket':
+            scraper = websocket;
             break;
 
         default:
