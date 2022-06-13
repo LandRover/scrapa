@@ -3,10 +3,10 @@ import * as puppeteer from '../http/puppeteer.js';
 import * as websocket from '../http/websocket.js';
 
 
-const scrape = async ({ url, type = 'get', regExp = [] }) => {
+const scrape = async ({ url, type = 'get', regExp = [], payload = {}}) => {
     try {
 
-        let body = await _loadScraper(type).get(url);
+        let body = await _loadScraper(type).get(url, payload);
 
         for (let i = 0, len = regExp.length; i < len; i++) {
             let pattern = regExp[i];

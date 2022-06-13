@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 
 
-const get = async function (url, payload) {
+const get = async function (url, payload = {}) {
     const ws = new WebSocket(url);
 
     return new Promise((resolve, reject) => {
