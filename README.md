@@ -207,7 +207,6 @@ console.debug(parsed);
 ## TODO
 - Debug output
 - Status code responses
-- Randomize useragent.
 - Inject logger
 - Cover scrape with tests
 - Add E2E

@@ -1,16 +1,12 @@
 import fetch from 'node-fetch';
-
-
-const config = {
-    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604.1'
-};
+import userAgent from '../../utils/useragent.js';
 
 
 const get = async function (url) {
     let body = '';
 
     let headers = {
-        'User-Agent': config.userAgent
+        'User-Agent': userAgent.getUserAgentRandom()
     };
 
     let referrer = await _getDomainName(url);
@@ -36,6 +32,7 @@ const _getDomainName = async function (url) {
 
     return domain.origin;
 };
+
 
 export {
     get
