@@ -25,6 +25,7 @@ class Websocket extends BaseRequest {
                 ws.close();
 
                 this.setBody(body);
+                this.setStatusCode(200);
                 this.loadingCompleted();
 
                 resolve(this);
