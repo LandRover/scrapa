@@ -1,39 +1,43 @@
 import fetch from 'node-fetch';
+
+import BaseRequest from './base_request.js';
 import userAgent from '../../utils/useragent.js';
 
+class Fetch extends BaseRequest {
+    async load() {
+        let headers = {
+            'User-Agent': userAgent.getUserAgentRandom()
+        };
 
-const get = async function (url) {
-    let body = '';
+        let referrer = await this.#_getDomainName();
 
-    let headers = {
-        'User-Agent': userAgent.getUserAgentRandom()
+        try {
+            const response = await fetch(this.getURL(), {
+                headers,
+                referrer,
+            });
+
+            const body = await response.text();
+
+            this.setBody(body);
+            this.setStatusCode(response.status);
+            this.loadingCompleted();
+        } catch(err) {
+            console.error(err);
+        }
+
+        return this;
     };
 
-    let referrer = await _getDomainName(url);
 
-    try {
-        const response = await fetch(url, {
-            headers,
-            referrer,
-        });
+    async #_getDomainName() {
+        let domain = (new URL(this.getURL()));
 
-        body = await response.text();
-
-    } catch(err) {
-        console.error(err);
+        return domain.origin;
     }
 
-    return body;
-};
+
+}
 
 
-const _getDomainName = async function (url) {
-    let domain = (new URL(url));
-
-    return domain.origin;
-};
-
-
-export {
-    get
-};
+export default Fetch;

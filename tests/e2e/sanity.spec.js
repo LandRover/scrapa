@@ -14,13 +14,13 @@ describe('Sanity', function() {
 
         it('When parsing an XML from a book store, then extract "author" and "title" from the XML fetched', async function () {
             // Act
-            let body = await scrape({
+            let scrapeResponse = await scrape({
                 url,
                 type: 'get',
             });
 
             let sut = await parse({
-                body,
+                body: scrapeResponse.body(),
                 type: 'xml',
                 fields: {
                     author: 'catalog.book.{Iterator}.author',
@@ -45,13 +45,13 @@ describe('Sanity', function() {
 
         it('When parsing an JSON document from github, then extract author, title fields only', async function () {
             // Act
-            let body = await scrape({
+            let scrapeResponse = await scrape({
                 url,
                 type: 'get',
             });
 
             let sut = await parse({
-                body,
+                body: scrapeResponse.body(),
                 type: 'json',
                 fields: {
                     author: 'catalog.book.{Iterator}.author',
@@ -77,13 +77,13 @@ describe('Sanity', function() {
 
         it('When parsing an HTML page from github, extract a UL element and return a list of drinks', async function () {
             // Act
-            let body = await scrape({
+            let scrapeResponse = await scrape({
                 url,
                 type: 'get',
             });
 
             let sut = await parse({
-                body,
+                body: scrapeResponse.body(),
                 type: 'html',
                 fields: {
                     first: 'ul li.first',

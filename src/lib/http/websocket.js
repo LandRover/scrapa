@@ -1,33 +1,39 @@
+import BaseRequest from './base_request.js';
+
 import WebSocket from 'ws';
 
+class Websocket extends BaseRequest {
 
-const get = async function (url, payload = {}) {
-    const ws = new WebSocket(url);
+    async load() {
+        const ws = new WebSocket(this.getURL());
 
-    return new Promise((resolve, reject) => {
-        ws.on('open', function open() {
-            ws.send(JSON.stringify(payload));
+        return new Promise((resolve, reject) => {
+            ws.on('open', () => {
+                ws.send(JSON.stringify(this.getPayload()));
+            });
+
+            ws.on('close', (code, data) => {
+                const reason = data.toString();
+            });
+
+            ws.on('error', (error) => {
+                reject(error);
+            });
+
+            ws.on('message', (data, isBinary) => {
+                const body = isBinary ? data : data.toString();
+                ws.close();
+
+                this.setBody(body);
+                this.loadingCompleted();
+
+                resolve(this);
+            });
+
         });
+    }
 
-        ws.on('close', (code, data) => {
-            const reason = data.toString();
-        });
-
-        ws.on('error', (error) => {
-            reject(error);
-        });
-
-        ws.on('message', (data, isBinary) => {
-            const message = isBinary ? data : data.toString();
-            ws.close();
-
-            resolve(message);
-        });
-
-    });
-};
+}
 
 
-export {
-    get
-};
+export default Websocket;

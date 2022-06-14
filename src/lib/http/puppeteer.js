@@ -1,4 +1,6 @@
 import puppeteer from 'puppeteer';
+
+import BaseRequest from './base_request.js';
 import userAgent from '../../utils/useragent.js';
 
 const config = {
@@ -29,54 +31,63 @@ const config = {
     }
 };
 
+class Puppeteer extends BaseRequest {
+    async load() {
+        let browser = await this.#_getBrowser(config.puppeteerLaunchOptions);
 
-const get = async function (url) {
-    let body = null;
+        try {
+            const page = await this.#_loadPage(browser, this.getURL(), config.pageOptions);
 
-    let browser = await _getBrowser(config.puppeteerLaunchOptions);
+            this.setBody(page.body);
+            this.setStatusCode(page.statusCode);
 
-    try {
-        body = await _loadPage(browser, url, config.pageOptions);
-    } catch(err) {
-        console.error('Puppeteer browser failed to load page', err);
+            this.loadingCompleted();
+            
+        } catch(err) {
+            console.error('Puppeteer browser failed to load page', err);
+        }
+
+        await browser.close();
+
+        return this;
     }
 
-    await browser.close();
 
-    return body;
-};
-
-
-const _getBrowser = async (launchOptions) => {
-    return await puppeteer.launch(launchOptions);
-};
+    async #_getBrowser(launchOptions) {
+        return await puppeteer.launch(launchOptions);
+    }
 
 
-const _loadPage = async (browser, url, pageOptions) => {
-    const page = await browser.newPage();
+    async #_loadPage(browser, url, pageOptions) {
+        const page = await browser.newPage();
 
-    await page.setUserAgent(config.userAgent);
-    await page.setRequestInterception(true);
+        await page.setUserAgent(config.userAgent);
+        await page.setRequestInterception(true);
 
-    // filter images, fonts and css
-    page.on('request', (interceptedRequest) => {
-        if (/(stylesheet|image|font)/.test(interceptedRequest.resourceType())) {
-            interceptedRequest.abort();
-        }
-        else {
-            interceptedRequest.continue();
-        }
-    });
+        // filter images, fonts and css
+        page.on('request', (interceptedRequest) => {
+            if (/(stylesheet|image|font)/.test(interceptedRequest.resourceType())) {
+                interceptedRequest.abort();
+            }
+            else {
+                interceptedRequest.continue();
+            }
+        });
 
-    await page.goto(url, pageOptions);
-    let body = await page.content();
+        let reply = await page.goto(url, pageOptions);
+        let body = await page.content();
+        let statusCode = reply.status();
 
-    await page.close();
+        await page.close();
 
-    return body;
-};
+        return {
+            body,
+            statusCode
+        };
+    }
 
 
-export {
-    get
-};
+}
+
+
+export default Puppeteer;

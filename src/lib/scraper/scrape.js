@@ -1,26 +1,20 @@
-import * as fetch from '../http/fetch.js';
-import * as puppeteer from '../http/puppeteer.js';
-import * as websocket from '../http/websocket.js';
+import Fetch from '../http/fetch.js';
+import Puppeteer from '../http/puppeteer.js';
+import Websocket from '../http/websocket.js';
 
 
 const scrape = async ({ url, type = 'get', regExp = [], payload = {}}) => {
     try {
 
-        let body = await _loadScraper(type).get(url, payload);
+        let result = (await _loadScraper(type)
+                .setURL(url)
+                .setPayload(payload)
+                .load()
+            )
+            .reduceRegExp(regExp)
+            .serialize();
 
-        for (let i = 0, len = regExp.length; i < len; i++) {
-            let pattern = regExp[i];
-
-            if (pattern instanceof RegExp) {
-                let res = pattern.exec(body);
-
-                if (undefined !== res[1]) {
-                    body = res[1];
-                }
-            }
-        }
-
-        return body;
+        return result;
 
     } catch (err) {
         console.log(`Load failed, ${type}! Error: ${err}.`);
@@ -34,15 +28,15 @@ const _loadScraper = function (type) {
     switch (type) {
 
         case 'get':
-            scraper = fetch;
+            scraper = new Fetch();
             break;
 
         case 'headless':
-            scraper = puppeteer;
+            scraper = new Puppeteer();
             break;
 
         case 'websocket':
-            scraper = websocket;
+            scraper = new Websocket();
             break;
 
         default:
