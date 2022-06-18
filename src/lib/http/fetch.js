@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 
 import BaseRequest from './base_request.js';
 import userAgent from '../../utils/useragent.js';
+import logger from '../../utils/logger.js';
 
 class Fetch extends BaseRequest {
     async load() {
@@ -23,7 +24,7 @@ class Fetch extends BaseRequest {
             this.setStatusCode(response.status);
             this.loadingCompleted();
         } catch(err) {
-            console.error(err);
+            logger.error(err);
         }
 
         return this;

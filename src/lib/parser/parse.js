@@ -1,3 +1,6 @@
+import logger from '../../utils/logger';
+
+
 const parse = async function ({ body, type = 'html', fields = {}, options = {} }) {
     try {
 
@@ -7,7 +10,7 @@ const parse = async function ({ body, type = 'html', fields = {}, options = {} }
         return response;
 
     } catch (err) {
-        console.error(`Parse failed, ${type}! Error: ${err}.`);
+        logger.error(`Parse failed, ${type}! Error: ${err}.`);
     }
 };
 
@@ -30,7 +33,7 @@ const _loadParser = async function(type) {
             break;
 
         default:
-            console.error(`NOT IMPLEMENTED PARSER: ${type}`);
+            logger.error(`NOT IMPLEMENTED PARSER: ${type}`);
     }
 
     return parser;

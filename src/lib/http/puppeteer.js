@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 
 import BaseRequest from './base_request.js';
 import userAgent from '../../utils/useragent.js';
+import logger from '../../utils/logger.js';
 
 const config = {
     userAgent: userAgent.getUserAgentRandom(),
@@ -44,7 +45,7 @@ class Puppeteer extends BaseRequest {
             this.loadingCompleted();
             
         } catch(err) {
-            console.error('Puppeteer browser failed to load page', err);
+            logger.error('Puppeteer browser failed to load page', err);
         }
 
         await browser.close();

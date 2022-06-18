@@ -41,7 +41,7 @@ const _loadScraper = function (type) {
             break;
 
         default:
-            console.error(`NOT IMPLEMENTED PARSER: ${scraperName}`);
+            logger.error(`NOT IMPLEMENTED PARSER: ${scraperName}`);
     }
 
     return scraper;
