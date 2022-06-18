@@ -17,8 +17,9 @@ class BaseRequest {
 
   serialize() {
     return {
-      statusCode: () => this.getStatusCode(),
+      url: () => this.getURL(),
       body: () => this.getBody(),
+      statusCode: () => this.getStatusCode(),
     };
   }
 
