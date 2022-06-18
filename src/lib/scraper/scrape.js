@@ -1,3 +1,4 @@
+import logger from '../../utils/logger.js';
 import Fetch from '../http/fetch.js';
 import Puppeteer from '../http/puppeteer.js';
 import Websocket from '../http/websocket.js';
@@ -17,7 +18,7 @@ const scrape = async ({ url, type = 'get', regExp = [], payload = {}}) => {
         return result;
 
     } catch (err) {
-        console.log(`Load failed, ${type}! Error: ${err}.`);
+        logger.error(`Load failed, ${type}! Error: ${err}.`);
     }
 };
 

@@ -1,4 +1,5 @@
 import { XMLParser } from 'fast-xml-parser';
+import logger from '../../../utils/logger.js';
 import json from './json.js';
 
 export default async function ({ body, fields, options }) {
@@ -20,6 +21,6 @@ export default async function ({ body, fields, options }) {
         return jsonConvertedObject;
 
     } catch (err) {
-        console.log(err.message);
+        logger.error(err.message);
     }
 };
