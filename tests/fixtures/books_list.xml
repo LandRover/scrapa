@@ -117,4 +117,12 @@
       integrated into a comprehensive development 
       environment.</description>
    </book>
+   <book id="bk113">
+      <author>Malformed, empty title field</author>
+      <title></title>
+      <genre>Computer</genre>
+      <price>0.5</price>
+      <publish_date>2000-01-01</publish_date>
+      <description></description>
+   </book>
 </catalog>

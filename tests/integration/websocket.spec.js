@@ -31,8 +31,6 @@ describe('Websocket', function() {
                 )
                 .serialize();
 
-            console.log(sut.body());
-
             // Assert
             expect(sut.body()).toContain(payload.value);
         });

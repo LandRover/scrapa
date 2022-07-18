@@ -15,7 +15,8 @@ const _JSON = (body, fields, options) => {
             let reduceList = body;
 
             if ('' !== prefixTree) {
-                // clean dots, prefix and sufix
+                // clean dots, prefix and suffix
+                // @todo move to a proper sanitizing function.
                 prefixTree = prefixTree.replace(/\.+$/g, '').replace(/^\.+/, '');
 
                 reduceList = prefixTree.split('.').reduce(
@@ -40,15 +41,18 @@ const _JSON = (body, fields, options) => {
                 body
             );
 
-            if (undefined === output.fields[i]) {
-                output.fields[i] = {};
+            // make sure value exists, don't add empty fields.
+            if ('' !== reduceRes && undefined !== reduceRes && null !== reduceRes) {
+                if (undefined === output.fields[i]) {
+                    output.fields[i] = {};
+                }
+
+                output.fields[i][el] = reduceRes;
             }
-
-            output.fields[i][el] = reduceRes;
         }
-
-        output.total = output.fields.length;
     }
+
+    output.total = output.fields.length;
 
     if (true === options.reverse) {
         output.fields.reverse();

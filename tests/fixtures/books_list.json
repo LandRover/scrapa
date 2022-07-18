@@ -96,6 +96,14 @@
         "price": 49.95,
         "publish_date": "2001-04-16",
         "description": "Microsoft Visual Studio 7 is explored in depth,\n      looking at how Visual Basic, Visual C++, C#, and ASP+ are \n      integrated into a comprehensive development \n      environment."
+      },
+      {
+        "author": "Malformed, empty title field",
+        "title": "",
+        "genre": "Computer",
+        "price": 0.5,
+        "publish_date": "2000-01-01",
+        "description": ""
       }
     ]
   }
