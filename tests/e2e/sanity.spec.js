@@ -29,7 +29,7 @@ describe('Sanity', function() {
             });
             
             // Assert
-            expect(sut.total).toBe(12);
+            expect(sut.total).toBeGreaterThan(12);
             expect(sut.total).toBe(sut.fields.length);
             expect(sut.fields[0].author).toBe('Gambardella, Matthew');
             expect(sut.fields[0].title).toBe("XML Developer's Guide");
@@ -60,12 +60,11 @@ describe('Sanity', function() {
             });
             
             // Assert
-            
-            expect(sut.total).toBe(12);
+            expect(sut.total).toBeGreaterThan(12);
             expect(sut.total).toBe(sut.fields.length);
-            expect(sut.fields[sut.fields.length-1].author).toBe('Galos, Mike');
-            expect(sut.fields[sut.fields.length-1].title).toBe('Visual Studio 7: A Comprehensive Guide');
-            expect(sut.fields[sut.fields.length-1].description).toBeUndefined();
+            expect(sut.fields[sut.fields.length-2].author).toBe('Galos, Mike');
+            expect(sut.fields[sut.fields.length-2].title).toBe('Visual Studio 7: A Comprehensive Guide');
+            expect(sut.fields[sut.fields.length-2].description).toBeUndefined();
         });
 
 
