@@ -1,4 +1,4 @@
-import logger from '../../utils/logger';
+import logger from '../../utils/logger.js';
 
 
 const parse = async function ({ body, type = 'html', fields = {}, options = {} }) {

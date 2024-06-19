@@ -1,5 +1,5 @@
 import { scrape, parse } from '../../src/scrapa.js';
-import { isValidURL } from '../helpers/is_valid_url';
+import { isValidURL } from '../helpers/is_valid_url.js';
 
 //
 describe('BP Top 100', function() {
