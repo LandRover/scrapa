@@ -21,15 +21,15 @@ const _loadParser = async function(type) {
     // this uses a switch for static require analysis
     switch (type) {
         case 'json':
-            parser = (await import('./types/json')).default;
+            parser = (await import('./types/json.js')).default;
             break;
 
         case 'xml':
-            parser = (await import('./types/xml')).default;
+            parser = (await import('./types/xml.js')).default;
             break;
             
         case 'html':
-            parser = (await import('./types/html')).default;
+            parser = (await import('./types/html.js')).default;
             break;
 
         default:
