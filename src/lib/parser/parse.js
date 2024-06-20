@@ -27,6 +27,10 @@ const _loadParser = async function(type) {
         case 'xml':
             parser = (await import('./types/xml.js')).default;
             break;
+
+        case 'csv':
+            parser = (await import('./types/csv.js')).default;
+            break;
             
         case 'html':
             parser = (await import('./types/html.js')).default;

@@ -9,7 +9,7 @@ export default async function ({ body, fields, options }) {
         let res = options.regExp.exec(xmlData);
 
         if (undefined !== res[1]) {
-            data = res[1];
+            xmlData = res[1];
         }
     }
 
