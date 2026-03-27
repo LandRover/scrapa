@@ -4,6 +4,7 @@ class BaseRequest {
   #payload = null;
   #body = null;
   #statusCode = 0;
+  #proxy = null;
 
 
   constructor() {}
@@ -72,6 +73,18 @@ class BaseRequest {
   }
 
 
+  getProxy() {
+    return this.#proxy;
+  }
+
+
+  setProxy(proxy) {
+    this.#proxy = proxy;
+
+    return this;
+  }
+
+
   load() {
     throw 'OVERRIDE';
   }
@@ -85,7 +98,7 @@ class BaseRequest {
         if (pattern instanceof RegExp) {
             let res = pattern.exec(this.#body);
 
-            if (undefined !== res[1]) {
+            if (res !== null && undefined !== res[1]) {
                 this.#body = res[1];
             }
         }

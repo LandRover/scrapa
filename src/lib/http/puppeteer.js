@@ -34,10 +34,16 @@ const config = {
 
 class Puppeteer extends BaseRequest {
     async load() {
-        let browser = await this.#_getBrowser(config.puppeteerLaunchOptions);
+        let launchOptions = { ...config.puppeteerLaunchOptions, args: [...config.puppeteerLaunchOptions.args] };
+
+        if (this.getProxy()) {
+            launchOptions.args.push(`--proxy-server=${this.getProxy()}`);
+        }
+
+        let browser = await this.#_getBrowser(launchOptions);
 
         try {
-            const page = await this.#_loadPage(browser, this.getURL(), config.pageOptions);
+            const page = await this.#_loadPage(browser, this.getURL(), config.pageOptions, this.getProxy());
 
             this.setBody(page.body);
             this.setStatusCode(page.statusCode);
@@ -59,8 +65,15 @@ class Puppeteer extends BaseRequest {
     }
 
 
-    async #_loadPage(browser, url, pageOptions) {
+    async #_loadPage(browser, url, pageOptions, proxy = null) {
         const page = await browser.newPage();
+
+        if (proxy) {
+            const proxyUrl = new URL(proxy);
+            if (proxyUrl.username && proxyUrl.password) {
+                await page.authenticate({ username: proxyUrl.username, password: proxyUrl.password });
+            }
+        }
 
         await page.setUserAgent(config.userAgent);
         await page.setRequestInterception(true);

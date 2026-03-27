@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 import BaseRequest from './base_request.js';
 import userAgent from '../../utils/useragent.js';
@@ -12,11 +13,14 @@ class Fetch extends BaseRequest {
 
         let referrer = await this.#_getDomainName();
 
+        let fetchOptions = { headers, referrer };
+
+        if (this.getProxy()) {
+            fetchOptions.agent = new HttpsProxyAgent(this.getProxy());
+        }
+
         try {
-            const response = await fetch(this.getURL(), {
-                headers,
-                referrer,
-            });
+            const response = await fetch(this.getURL(), fetchOptions);
 
             const body = await response.text();
 

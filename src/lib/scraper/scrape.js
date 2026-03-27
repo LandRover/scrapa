@@ -4,14 +4,17 @@ import Puppeteer from '../http/puppeteer.js';
 import Websocket from '../http/websocket.js';
 
 
-const scrape = async ({ url, type = 'get', regExp = [], payload = {}}) => {
+const scrape = async ({ url, type = 'get', regExp = [], payload = {}, proxy = null }) => {
     try {
+        let scraper = _loadScraper(type)
+            .setURL(url)
+            .setPayload(payload);
 
-        let result = (await _loadScraper(type)
-                .setURL(url)
-                .setPayload(payload)
-                .load()
-            )
+        if (proxy) {
+            scraper.setProxy(proxy);
+        }
+
+        let result = (await scraper.load())
             .reduceRegExp(regExp)
             .serialize();
 
