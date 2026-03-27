@@ -13,7 +13,7 @@ describe('BP Top 100', function() {
             let scrapeResponse = await scrape({
                 url: URLRaw,
                 type: 'get',
-                regExp: [new RegExp('<script id="__NEXT_DATA__" type="application\/json">(.*)<\/script>')],
+                regExp: [new RegExp('<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>', 's')],
             });
 
             let sut = await parse({
@@ -62,7 +62,7 @@ describe('BP Top 100', function() {
             let scrapeResponse = await scrape({
                 url: URLRaw,
                 type: 'get',
-                regExp: [new RegExp('<script id="__NEXT_DATA__" type="application\/json">(.*)<\/script>')],
+                regExp: [new RegExp('<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>', 's')],
             });
 
             let sut = await parse({
