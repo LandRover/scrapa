@@ -1,8 +1,11 @@
-import puppeteer from 'puppeteer';
+import puppeteerExtra from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
 import BaseRequest from './base_request.js';
 import userAgent from '../../utils/useragent.js';
 import logger from '../../utils/logger.js';
+
+puppeteerExtra.use(StealthPlugin());
 
 const config = {
     userAgent: userAgent.getUserAgentRandom(),
@@ -16,7 +19,9 @@ const config = {
             '--no-first-run',
             '--no-zygote',
             '--single-process',
-            '--disable-gpu'
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--ignore-certificate-errors'
         ],
 
         //dumpio: true,
@@ -37,7 +42,8 @@ class Puppeteer extends BaseRequest {
         let launchOptions = { ...config.puppeteerLaunchOptions, args: [...config.puppeteerLaunchOptions.args] };
 
         if (this.getProxy()) {
-            launchOptions.args.push(`--proxy-server=${this.getProxy()}`);
+            const proxyUrl = new URL(this.getProxy());
+            launchOptions.args.push(`--proxy-server=${proxyUrl.origin}`);
         }
 
         let browser = await this.#_getBrowser(launchOptions);
@@ -61,7 +67,7 @@ class Puppeteer extends BaseRequest {
 
 
     async #_getBrowser(launchOptions) {
-        return await puppeteer.launch(launchOptions);
+        return await puppeteerExtra.launch(launchOptions);
     }
 
 
@@ -78,6 +84,18 @@ class Puppeteer extends BaseRequest {
         await page.setUserAgent(config.userAgent);
         await page.setRequestInterception(true);
 
+        // Intercept the main document response to capture raw body (e.g. JSON APIs)
+        let capturedBody = null;
+        let capturedContentType = null;
+        page.on('response', async (response) => {
+            if (response.url() === url && response.request().resourceType() === 'document') {
+                capturedContentType = response.headers()['content-type'] || '';
+                try {
+                    capturedBody = await response.text();
+                } catch (_) {}
+            }
+        });
+
         // filter images, fonts and css
         page.on('request', (interceptedRequest) => {
             if (/(stylesheet|image|font)/.test(interceptedRequest.resourceType())) {
@@ -89,8 +107,15 @@ class Puppeteer extends BaseRequest {
         });
 
         let reply = await page.goto(url, pageOptions);
-        let body = await page.content();
         let statusCode = reply.status();
+
+        // For JSON API responses use the raw intercepted body; fall back to rendered page HTML
+        let body;
+        if (capturedBody && capturedContentType && capturedContentType.includes('json')) {
+            body = capturedBody;
+        } else {
+            body = await page.content();
+        }
 
         await page.close();
 

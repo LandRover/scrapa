@@ -12,7 +12,7 @@ describe('Virgin', function() {
             // Act
             let scrapeResponse = await scrape({
                 url: URLRaw,
-                type: 'get',
+                type: 'headless',
             });
 
             let sut = await parse({
