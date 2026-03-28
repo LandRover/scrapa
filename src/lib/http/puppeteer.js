@@ -80,15 +80,15 @@ class Puppeteer extends BaseRequest {
         await page.setUserAgent(config.userAgent);
         await page.setRequestInterception(true);
 
-        // Intercept the main document response to capture raw body (e.g. JSON APIs)
-        let capturedBody = null;
-        let capturedContentType = null;
+        // Wrap the async body capture in a Promise so we can await it after goto()
+        // without racing — page.goto resolves before the async response.text() call finishes.
+        let captureResolve;
+        const capturePromise = new Promise(resolve => { captureResolve = resolve; });
         page.on('response', async (response) => {
             if (response.url() === url && response.request().resourceType() === 'document') {
-                capturedContentType = response.headers()['content-type'] || '';
-                try {
-                    capturedBody = await response.text();
-                } catch (_) {}
+                let captured = null;
+                try { captured = await response.text(); } catch (_) {}
+                captureResolve(captured);
             }
         });
 
@@ -105,12 +105,23 @@ class Puppeteer extends BaseRequest {
         let reply = await page.goto(url, pageOptions);
         let statusCode = reply.status();
 
-        // For JSON API responses use the raw intercepted body; fall back to rendered page HTML
+        // Wait for the intercepted body, falling back to page.content() if nothing was captured.
+        // Preferring the raw intercepted body avoids page.content() throwing when the execution
+        // context is destroyed by a Cloudflare/bot-protection redirect.
+        const capturedBody = await Promise.race([
+            capturePromise,
+            new Promise(resolve => setTimeout(() => resolve(null), 2000)),
+        ]);
+
         let body;
-        if (capturedBody && capturedContentType && capturedContentType.includes('json')) {
+        if (capturedBody) {
             body = capturedBody;
         } else {
-            body = await page.content();
+            try {
+                body = await page.content();
+            } catch (_) {
+                body = null;
+            }
         }
 
         await page.close();
