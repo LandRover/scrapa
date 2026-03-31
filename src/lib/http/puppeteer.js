@@ -24,7 +24,6 @@ const config = {
             '--disable-dev-shm-usage',
             '--disable-session-crashed-bubble',
             '--disable-search-engine-choice-screen',
-            '--user-data-dir=/tmp/uc_gutm0kef',
             '--disable-session-crashed-bubble',
             '--disable-features=IsolateOrigins,site-per-process',
             '--ignore-certificate-errors'
