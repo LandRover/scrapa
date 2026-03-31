@@ -12,13 +12,21 @@ const config = {
 
     puppeteerLaunchOptions: {
         args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-accelerated-2d-canvas',
+            '--remote-allow-origins=*',
             '--no-first-run',
-            '--single-process',
-            '--disable-gpu',
+            '--no-service-autorun',
+            '--no-default-browser-check',
+            '--homepage=about:blank',
+            '--no-pings',
+            '--password-store=basic',
+            '--disable-infobars',
+            '--disable-breakpad',
+            '--disable-dev-shm-usage',
+            '--disable-session-crashed-bubble',
+            '--disable-search-engine-choice-screen',
+            '--user-data-dir=/tmp/uc_gutm0kef',
+            '--disable-session-crashed-bubble',
+            '--disable-features=IsolateOrigins,site-per-process',
             '--ignore-certificate-errors'
         ],
 
