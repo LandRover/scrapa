@@ -5,7 +5,9 @@ import WebSocket from 'ws';
 class Websocket extends BaseRequest {
 
     async load() {
-        const ws = new WebSocket(this.getURL());
+        const h = this.getHeaders();
+        const wsOptions = h && Object.keys(h).length > 0 ? { headers: h } : undefined;
+        const ws = new WebSocket(this.getURL(), wsOptions);
 
         return new Promise((resolve, reject) => {
             ws.on('open', () => {

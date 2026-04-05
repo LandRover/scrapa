@@ -8,7 +8,8 @@ import logger from '../../utils/logger.js';
 class Fetch extends BaseRequest {
     async load() {
         let headers = {
-            'User-Agent': userAgent.getUserAgentRandom()
+            'User-Agent': userAgent.getUserAgentRandom(),
+            ...(this.getHeaders() || {}),
         };
 
         let referrer = await this.#_getDomainName();

@@ -4,7 +4,7 @@ import Puppeteer from '../http/puppeteer.js';
 import Websocket from '../http/websocket.js';
 
 
-const scrape = async ({ url, type = 'get', regExp = [], payload = {}, proxy = null }) => {
+const scrape = async ({ url, type = 'get', regExp = [], payload = {}, proxy = null, headers = null }) => {
     try {
         let scraper = _loadScraper(type)
             .setURL(url)
@@ -12,6 +12,10 @@ const scrape = async ({ url, type = 'get', regExp = [], payload = {}, proxy = nu
 
         if (proxy) {
             scraper.setProxy(proxy);
+        }
+
+        if (headers) {
+            scraper.setHeaders(headers);
         }
 
         let result = (await scraper.load())

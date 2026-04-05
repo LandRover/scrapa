@@ -54,7 +54,7 @@ class Puppeteer extends BaseRequest {
         let browser = await this.#_getBrowser(launchOptions);
 
         try {
-            const page = await this.#_loadPage(browser, this.getURL(), config.pageOptions, this.getProxy());
+            const page = await this.#_loadPage(browser, this.getURL(), config.pageOptions, this.getProxy(), this.getHeaders());
 
             this.setBody(page.body);
             this.setStatusCode(page.statusCode);
@@ -76,7 +76,7 @@ class Puppeteer extends BaseRequest {
     }
 
 
-    async #_loadPage(browser, url, pageOptions, proxy = null) {
+    async #_loadPage(browser, url, pageOptions, proxy = null, extraHeaders = null) {
         const page = await browser.newPage();
 
         if (proxy) {
@@ -87,6 +87,9 @@ class Puppeteer extends BaseRequest {
         }
 
         await page.setUserAgent(config.userAgent);
+        if (extraHeaders && Object.keys(extraHeaders).length > 0) {
+            await page.setExtraHTTPHeaders(extraHeaders);
+        }
         await page.setRequestInterception(true);
 
         // Wrap the async body capture in a Promise so we can await it after goto()

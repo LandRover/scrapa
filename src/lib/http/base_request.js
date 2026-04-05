@@ -5,6 +5,7 @@ class BaseRequest {
   #body = null;
   #statusCode = 0;
   #proxy = null;
+  #headers = null;
 
 
   constructor() {}
@@ -80,6 +81,18 @@ class BaseRequest {
 
   setProxy(proxy) {
     this.#proxy = proxy;
+
+    return this;
+  }
+
+
+  getHeaders() {
+    return this.#headers;
+  }
+
+
+  setHeaders(headers) {
+    this.#headers = headers;
 
     return this;
   }
