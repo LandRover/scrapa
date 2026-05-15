@@ -52,8 +52,6 @@ const _JSON = (body, fields, options) => {
         }
     }
 
-    output.total = output.fields.length;
-
     if (true === options.reverse) {
         output.fields.reverse();
     }
@@ -61,6 +59,8 @@ const _JSON = (body, fields, options) => {
     if (0 < options.limit && options.limit < output.fields.length) {
         output.fields.splice(options.limit);
     }
+
+    output.total = output.fields.length;
 
     return output;
 };

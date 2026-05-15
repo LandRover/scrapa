@@ -250,6 +250,25 @@ describe('Parser', function() {
             expect(sut.total).toBe(3);
         });
 
+
+        it('When parsing lines with limit and reverse, total matches truncated fields length', async function () {
+            let type = 'lines',
+                fields = {
+                    chartLine: '{Iterator}',
+                },
+                options = {
+                    limit: 20,
+                    reverse: true,
+                };
+
+            let body = Array.from({ length: 25 }, (_, i) => String(i)).join('\n');
+
+            let sut = await parse({ type, body, fields, options });
+
+            expect(sut.fields.length).toBe(20);
+            expect(sut.total).toBe(20);
+        });
+
     });
 
 
