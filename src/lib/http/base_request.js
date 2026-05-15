@@ -121,6 +121,29 @@ class BaseRequest {
   }
 
 
+  /**
+   * Sequential RegExp substitutions. Each tuple is `[searchRegExp, replacementString]` (see `scrape`).
+   */
+  reduceRegexpReplacements(pairs = []) {
+    for (let i = 0, len = pairs.length; i < len; i++) {
+      let pair = pairs[i];
+
+      if (false === Array.isArray(pair) || pair.length < 2) {
+          continue;
+      }
+
+      let search = pair[0];
+      let replacement = pair[1];
+
+      if (search instanceof RegExp && 'string' === typeof replacement) {
+          this.#body = this.#body.replace(search, replacement);
+      }
+    }
+
+    return this;
+  }
+
+
 }
 
 

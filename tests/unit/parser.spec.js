@@ -229,7 +229,30 @@ describe('Parser', function() {
         });
 
     });
-    
+
+
+    describe('Parsering lines', function () {
+
+
+        it('When body is newline text, {Iterator} maps each non-empty trimmed line into a field', async function () {
+            let type = 'lines',
+                fields = {
+                    chartLine: '{Iterator}',
+                };
+
+            let body = ' alpha \n\nbeta\ngamma ';
+
+            let sut = await parse({ type, body, fields });
+
+            expect(sut.fields.length).toBe(3);
+            expect(sut.fields[0].chartLine).toBe('alpha');
+            expect(sut.fields[2].chartLine).toBe('gamma');
+            expect(sut.total).toBe(3);
+        });
+
+    });
+
+
     describe('Parsering JSON', function () {
 
 
@@ -339,6 +362,34 @@ describe('Parser', function() {
                 // Assert
                 expect(sut.fields.length).toBe(5);
                 expect(sut.fields[2].name_is).toBe('Craig Silverstein');
+            });
+
+
+            it('When iterating items with {Iterator}, description can be read as a scalar per item', async function () {
+                // Arrange — each item has a string description (not an array); one row per item.
+                let type = 'json',
+                    fields = {
+                        id: 'items.{Iterator}.id',
+                        title: 'items.{Iterator}.title',
+                        blurb: 'items.{Iterator}.description',
+                    };
+
+                let body = {
+                    items: [
+                        { id: 'a1', title: 'First', description: 'Intro copy.' },
+                        { id: 'b2', title: 'Second', description: 'More copy.' },
+                    ],
+                };
+
+                // Act
+                let sut = await parse({ type, body, fields });
+
+                // Assert
+                expect(sut.fields.length).toBe(2);
+                expect(sut.fields[0].id).toBe('a1');
+                expect(sut.fields[0].blurb).toBe('Intro copy.');
+                expect(sut.fields[1].title).toBe('Second');
+                expect(sut.fields[1].blurb).toBe('More copy.');
             });
 
         });

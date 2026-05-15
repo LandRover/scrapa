@@ -4,7 +4,10 @@ import Puppeteer from '../http/puppeteer.js';
 import Websocket from '../http/websocket.js';
 
 
-const scrape = async ({ url, type = 'get', regExp = [], payload = {}, proxy = null, headers = null }) => {
+/**
+ * replacements: `[RegExp, string][]` applied in order via `body.replace(...)` after `regExp`.
+ */
+const scrape = async ({ url, type = 'get', regExp = [], replacements = [], payload = {}, proxy = null, headers = null }) => {
     try {
         let scraper = _loadScraper(type)
             .setURL(url)
@@ -20,6 +23,7 @@ const scrape = async ({ url, type = 'get', regExp = [], payload = {}, proxy = nu
 
         let result = (await scraper.load())
             .reduceRegExp(regExp)
+            .reduceRegexpReplacements(replacements)
             .serialize();
 
         return result;

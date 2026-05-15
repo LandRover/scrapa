@@ -24,4 +24,21 @@ describe('Fetch', function() {
 
 
     });
+
+
+    describe('RegExp substitutions on loaded body', function () {
+
+
+        it('reduceRegexpReplacements applies [RegExp, string] pairs from an array', async function () {
+            let sut = new Fetch().setBody('20: aa<br />\n30: bb').reduceRegexpReplacements([
+                [/<br\s*\/?>\s*/gi, '\n'],
+                [/^\d+[:.]\s+/gm, ''],
+            ]);
+
+            expect(sut.getBody()).toBe('aa\nbb');
+        });
+
+    });
+
+
 });
